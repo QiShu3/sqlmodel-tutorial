@@ -1,15 +1,10 @@
 [project]
-name = "practice2"
+name = "tutorial2"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "mcp-agent>=0.1.10",
-]
-
-[tool.uv.workspace]
-members = [
-    "workflow",
-    "workflow/tutorial2",
+    "dotenv>=0.9.9",
+    "sqlmodel[all]>=0.0.24",
 ]
