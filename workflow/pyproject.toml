@@ -1,0 +1,10 @@
+[project]
+name = "workflow"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fast-agent-mcp",
+    "sqlmodel[all]>=0.0.24",
+]

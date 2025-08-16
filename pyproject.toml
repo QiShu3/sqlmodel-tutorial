@@ -1,0 +1,15 @@
+[project]
+name = "practice2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp-agent>=0.1.10",
+]
+
+[tool.uv.workspace]
+members = [
+    "workflow",
+    "workflow/tutorial2",
+]
