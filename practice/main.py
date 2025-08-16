@@ -1,58 +1,65 @@
 from typing import List
+from webbrowser import get
 from sqlmodel import Session, select
 from config.database import create_db_and_tables, get_session
 from models.hero import Hero, HeroCreate
 
-def create_hero(session: Session, hero_data: HeroCreate) -> Hero:
+def create_hero(session:Session,hero_data:HeroCreate)->Hero:
     """创建英雄"""
     hero = Hero.from_orm(hero_data)
+    # 会话
     session.add(hero)
     session.commit()
     session.refresh(hero)
+
     print(f"✅ 创建英雄成功: {hero.name}")
     return hero
 
-def get_heroes(session: Session) -> List[Hero]:
+def get_heroes(session:Session)->List[Hero]:
     """获取所有英雄"""
     statement = select(Hero)
     heroes = session.exec(statement).all()
-    print(f"📋 找到 {len(heroes)} 个英雄")
+    print(f" 找到 {len(heroes)} 个英雄")
     return heroes
 
-def get_hero_by_id(session: Session, hero_id: int) -> Hero | None:
-    """根据 ID 获取英雄"""
-    hero = session.get(Hero, hero_id)
+def get_hero_by_id(session:Session,hero_id:int)->Hero | None:
+    """根据ID获取英雄"""
+    hero = session.get(Hero,hero_id)
     if hero:
         print(f"🔍 找到英雄: {hero.name}")
     else:
         print(f"❌ 未找到 ID 为 {hero_id} 的英雄")
     return hero
 
-def update_hero(session: Session, hero_id: int, hero_data: dict) -> Hero | None:
-    """更新英雄信息"""
-    hero = session.get(Hero, hero_id)
+def update_hero(session:Session,hero_id:int,hero_data:dict)->Hero | None:
+    """更新英雄"""
+    hero = session.get(Hero,hero_id)
+
     if not hero:
         print(f"❌ 未找到 ID 为 {hero_id} 的英雄")
         return None
     
-    for key, value in hero_data.items():
-        if hasattr(hero, key) and value is not None:
-            setattr(hero, key, value)
-    
+    for key,value in hero_data.items():
+        if hasattr(hero,key) and value is not None:
+            setattr(hero,key,value)
+
     session.add(hero)
     session.commit()
     session.refresh(hero)
     print(f"✅ 更新英雄成功: {hero.name}")
     return hero
 
-def delete_hero(session: Session, hero_id: int) -> bool:
+def delete_hero(session: Session,hero_id:id)->bool:
     """删除英雄"""
-    hero = session.get(Hero, hero_id)
+    # 从数据库中搜索指定行
+    hero = session.get(Hero,hero_id)
+    # 没有找到的话
     if not hero:
         print(f"❌ 未找到 ID 为 {hero_id} 的英雄")
         return False
-    
-    session.delete(hero)
+
+    # 执行会话
+    session.delete(hero)    
     session.commit()
     print(f"🗑️ 删除英雄成功: {hero.name}")
     return True
@@ -61,14 +68,14 @@ def main():
     """主函数 - 演示 CRUD 操作"""
     print("🚀 SQLModel 教程 - 第一个程序")
     print("=" * 40)
-    
+
     # 创建数据库表
     create_db_and_tables()
-    
+
     # 获取数据库会话
     session_gen = get_session()
     session = next(session_gen)
-    
+
     try:
         # 1. 创建英雄
         print("\n1️⃣ 创建英雄")
@@ -122,4 +129,10 @@ def main():
         print("\n🎉 程序执行完成")
 
 if __name__ == "__main__":
-    main()
+    main()  
+
+
+
+
+
+

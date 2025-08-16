@@ -4,7 +4,7 @@ import os
 
 
 # 数据库 URL（默认使用 SQLite）
-DATABASE_URL = "sqlite:///./test.db"
+DATABASE_URL = "sqlite:///./tutorial.db"
 
 # 创建数据库引擎
 engine = create_engine(
